@@ -9,6 +9,9 @@ Vagrant.configure("2") do |config|
 
   config.vm.box = "centos/7"
 
+  options = {}
+    options[:beans] = ARGV[1]
+
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -55,6 +58,7 @@ Vagrant.configure("2") do |config|
   # View the documentation for the provider you are using for more
   # information on available options.
 
+
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
@@ -65,8 +69,7 @@ Vagrant.configure("2") do |config|
     sudo yum -y install https://centos7.iuscommunity.org/ius-release.rpm
     sudo yum -y install python36u
 
-    # file permissions need to be increased
-    # sudo chmod 770 /vagrant/socket_listen/py
 
   SHELL
+
 end

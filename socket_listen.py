@@ -1,10 +1,11 @@
-#!/bin/env python3.6
 
+
+# TODO make sure shebang is correct /bin/env?
+#   /bin/env python3.6
 import socket
 
 s = socket.socket()
 
-# is hostname defined?
 #host = socket.gethostname()
 host = "192.168.33.10"      # works, but should use hostname
 port = 80
