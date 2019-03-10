@@ -3,9 +3,9 @@ Heavily borrowed from https://gist.github.com/Integralist/ce5ebb37390ab0ae56c9e6
 """
 
 import time
-from http.server import BaseHTTPRequestHandler
-from http.server import HTTPServer
 import json
+from http.server import BaseHTTPRequestHandler, HTTPServer
+from call_weatherman import CallWeatherman
 
 HOST_NAME = 'localhost'
 PORT_NUMBER = 8080          # can't be a protected port without some hassle
@@ -13,11 +13,10 @@ PORT_NUMBER = 8080          # can't be a protected port without some hassle
 
 class MySimpleRequestHandler(BaseHTTPRequestHandler):
 
-    def __init__(self):
 
-        
 
-        pass
+
+
 
     # Override do_GET
     def do_GET(self):
@@ -42,7 +41,12 @@ class MySimpleRequestHandler(BaseHTTPRequestHandler):
 
                 timestamp = time.time()
 
-                response_dict = {'query_time': timestamp, 'temperature': 100}
+                weatherman = CallWeatherman()
+                temperature = weatherman.execute()
+
+
+
+                response_dict = {'query_time': timestamp, 'temperature': weatherman.temperature}
                 json_response = json.dumps(response_dict)
 
             # TODO add city search here

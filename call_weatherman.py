@@ -5,29 +5,50 @@ Created 3/2019
 """
 
 import requests
+import json
 
 
 class CallWeatherman:
 
-    base_url = "http://api.openweathermap.org/data/2.5/weather?{}"
+    BASE_URL = "http://api.openweathermap.org/data/2.5/weather?{}{}"
+    FUNCTION = "id=5746545"
+    API_KEY = "&APPID="
+
 
     def __init__(self):
-        print("beans")
-        pass
+
+        self.temperature = 0
 
     def execute(self):
 
-        resp = requests.get(self.base_url.format('id=5746545&APPID=<my api key>'))
-        if resp.status_code != 200:
+        response = requests.get(self.BASE_URL.format(self.FUNCTION, self.API_KEY))
+        if response.status_code != 200:
             # This means something went wrong.
-            print('GET /tasks/ {}'.format(resp.status_code))
-        for todo_item in resp:
-            #print('{} {}'.format(todo_item['id'], todo_item['summary']))
-            print(todo_item)
+            print('GET /tasks/ {}'.format(response.status_code))
+
+        return_bin = b""
+        for response_part in response:
+            return_bin += response_part
+
+        self.find_temperature(return_bin)
+
+    def find_temperature(self, json_object):
+
+        weather_dict = json.loads(json_object.decode())
+        kelvin = (weather_dict['main']['temp'])
+        fahrenheit = (kelvin - 273.15) * 9/5 + 32
+        fahrenheit_rounded = round(fahrenheit, 2)
+        self.temperature = fahrenheit_rounded
+        return fahrenheit_rounded
 
 
 
-        print("finished!")
+
+        #print(json_object.decode())
+
+
+
+
 
     # def process_filename_args(self):
     #
