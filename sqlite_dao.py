@@ -10,17 +10,59 @@ import sqlite3
 class SqLiteDao:
 
     def __init__(self):
-        print("beans")
-        pass
+        self.conn = sqlite3.connect('weather.db')
+        self.cursor = self.conn.cursor()
+        self.create_table()
 
-    def execute(self):
+    def create_table(self):
 
-        conn = sqlite3.connect('test.db')
+        try:
+            self.cursor.execute(
+                '''
+                CREATE TABLE TemperatureLog
+                 (timestamp real PRIMARY KEY, temperature real)
+                '''
+            )
+        except sqlite3.OperationalError:
+            pass
+
+    def get_temperature(self):
+        return_object = ""
+        try:
+            self.cursor.execute(
+                '''
+                SELECT MAX(timestamp), temperature FROM TemperatureLog 
+                '''
+            )
+
+            return_object = self.cursor.fetchone()
+
+        except sqlite3.OperationalError:
+            print("aww")
 
 
-        print("finished!")
+        return return_object
 
 
+    def insert_temperature(self, timestamp, temperature):
+        try:
+            # params need to be a tuple, or a list of tuples
+            input_params = (timestamp, temperature)
+
+            self.cursor.execute(
+                '''
+
+                INSERT INTO TemperatureLog VALUES (?,?)
+
+                ''', input_params
+
+            )
+            self.conn.commit()
+        except sqlite3.IntegrityError:
+            print("oops2")
+
+    def close_connection(self):
+        self.conn.close()
 
 
 if __name__ == "__main__":

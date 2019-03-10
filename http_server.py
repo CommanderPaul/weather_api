@@ -6,16 +6,13 @@ import time
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from call_weatherman import CallWeatherman
+from sqlite_dao import SqLiteDao
 
 HOST_NAME = 'localhost'
 PORT_NUMBER = 8080          # can't be a protected port without some hassle
 
 
 class MySimpleRequestHandler(BaseHTTPRequestHandler):
-
-
-
-
 
 
     # Override do_GET
@@ -35,16 +32,28 @@ class MySimpleRequestHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
         json_response = ""
+
+
+
         if status_code == 200:
 
             if path == "/temperature":
 
                 timestamp = time.time()
 
-                weatherman = CallWeatherman()
-                temperature = weatherman.execute()
+                # TODO check database
+                db = SqLiteDao()
+                print(db.get_temperature())
 
 
+
+                weatherman = CallWeatherman()       # TODO instantiate every time?
+                weatherman.execute()
+
+                db.insert_temperature(timestamp, weatherman.temperature)
+                print(db.get_temperature())
+
+                db.close_connection()
 
                 response_dict = {'query_time': timestamp, 'temperature': weatherman.temperature}
                 json_response = json.dumps(response_dict)
