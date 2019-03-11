@@ -6,7 +6,7 @@ class CallWeatherman:
 
     BASE_URL = "http://api.openweathermap.org/data/2.5/weather?{}{}"
     FUNCTION = "id=5746545"
-    API_KEY = "&APPID="
+    API_KEY = "&APPID=7f283940189575de586b368bad666ed1"
 
     def __init__(self):
 

@@ -8,8 +8,8 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 from call_weatherman import CallWeatherman
 from sqlite_dao import SqLiteDao
 
-HOST_NAME = 'localhost'
-PORT_NUMBER = 8080
+HOST_NAME = ''  # '192.168.33.10'
+PORT_NUMBER = 80    # 8080
 
 
 class MySimpleRequestHandler(BaseHTTPRequestHandler):
