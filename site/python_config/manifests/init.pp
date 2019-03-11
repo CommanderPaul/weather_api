@@ -9,7 +9,6 @@ package { 'epel-release-7-11.noarch':
   ensure => present,
 }
 
-
 # installs, but is not idempotent - another bug
 package { 'ius-release.rpm':
             provider => 'rpm',
@@ -34,7 +33,6 @@ package { ['requests']:
   require => Package['python36u-pip'],
 }
 
-
 file {
     '/vagrant/http_server.py':
       ensure => 'file',
@@ -47,7 +45,5 @@ file {
 exec { 'http_server_program':
   command => "/bin/python3.6 '/vagrant/http_server.py' &",
 }
-
-
 
 }
