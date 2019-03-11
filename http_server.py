@@ -1,15 +1,11 @@
-"""
-Heavily borrowed from https://gist.github.com/Integralist/ce5ebb37390ab0ae56c9e6e80128fdc2
-"""
-
 import time
 import json
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from call_weatherman import CallWeatherman
 from sqlite_dao import SqLiteDao
 
-HOST_NAME = ''  # '192.168.33.10'
-PORT_NUMBER = 80    # 8080
+HOST_NAME = ''
+PORT_NUMBER = 80
 
 
 class MySimpleRequestHandler(BaseHTTPRequestHandler):
