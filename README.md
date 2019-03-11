@@ -11,19 +11,23 @@ latest temperature.
 ## Getting Started
 ### Local Machine Prerequisites
 git
+
 Vagrant 2.2.4
+
 Virtualbox 5.2
 
-
 ## Deployment
-clone the repo
-navigate to repo
-Execute vagrant command
+1. Clone the repo
+2. Navigate to repo
+3. Execute vagrant command
 ```
 vagrant up
 ```
-
-access api
+4. Access api
 ```
 curl -i 192.168.33.10/temperature
+```
+5. Expected results
+```
+{"query_time": <timestamp>, "temperature": <temperature> }
 ```
